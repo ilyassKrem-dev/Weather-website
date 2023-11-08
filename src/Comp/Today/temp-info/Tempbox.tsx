@@ -1,9 +1,24 @@
 import Image from "next/image"
-import tempsvg from "../../../../public/Images/temp.svg"
-import cloudsvg from "../../../../public/Images/Cloud.svg"
+import tempsvg from "public/Images/temp.svg"
+
+import { useState } from "react"
 
 export default function Tempbox(props:any) {
+    const [weatherType , setWeatherType] = useState(props.tempList)
+    
+    type WeatherMainType = "Clouds" | "Clear" | "Rain" | "Snow" | "Thunderstorm"; 
 
+
+    const weatherImages: Record<WeatherMainType, string> = {
+        "Clouds": "/Images/clouds.png",
+        "Clear": "/Images/clear.png",
+        "Rain": "/Images/Rain.png",
+        "Snow": "/Images/snow.png",
+        "Thunderstorm": "/Images/thunderstorm.png",
+ 
+    };
+    const weatherMain = weatherType.weather[0].main as WeatherMainType;
+    const imageSource = weatherImages[weatherMain] || weatherImages.Clouds;
 
     return (
 
@@ -19,9 +34,8 @@ export default function Tempbox(props:any) {
                             ".." // Display a message when data is not available
                         )}
                     </p>
-                    <div className="relative">
-                        <Image src={cloudsvg} alt="" width={90} className="relative z-20 "/>
-                        <Image src={cloudsvg} alt="" width={90} className="absolute top-0 translate-x-5 -translate-y-4 z-5	"/>
+                    <div className="ml-2">
+                        <Image src={imageSource} alt="" width={80} height={80}/>
                     </div>
                 </div>
         </>

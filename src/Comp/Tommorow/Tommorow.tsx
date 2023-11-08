@@ -4,8 +4,9 @@ import Temp from "./temp-info/Temp"
 import Tempbox from "./temp-info/Tempbox"
 import Additioninfo from "./temp-info/Additioninfo"
 import Location from "./temp-info/Location"
-function Middle(props:any) {
+import Bottom from "./Bottom/Bottom"
 
+function Tommorow(props:any) {
     const [currentDate, setCurrentDate] = useState('');
     
     
@@ -30,14 +31,15 @@ function Middle(props:any) {
             <div className="bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow mx-60 flex flex-col p-6 text-white">
 
                 <Location city={props.city}/>
-                <Tempbox tempList={props.tempList} tempChange={props.tempChange}/>
+                {props.tempList && props.tempList.main&&<Tempbox tempList={props.tempList} tempChange={props.tempChange}/>}
 
                 <p className="font-[500] text-[1rem] underline">{currentDate}</p>
 
                 {props.tempList && props.tempList.main ? (
                     <Additioninfo tempinfo={props.tempList} />) : (".." )}
             </div>
+            <Bottom tempHours={props.weatherList} tempChange={props.tempChange}/>
         </>
     )
 }
-export default Middle
+export default Tommorow

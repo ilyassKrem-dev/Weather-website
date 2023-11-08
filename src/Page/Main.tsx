@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 
 import Top from "@/Comp/Top/Top"
-import Middle from "@/Comp/middle/Middle"
-import Bottom from "@/Comp/Bottom/Bottom"
+import Today from "@/Comp/Today/Today"
+import Tommorow from "@/Comp/Tommorow/Tommorow"
 function Main() {
     const [api , setApi] = useState("https://api.openweathermap.org/data/2.5/forecast?id=2553604&appid=c373cb30deb4bc19b25eac57de187d67")
     
     const [weather , setWeather] = useState({city:{name:""} , list:[]})
     const [currentDateTime, setCurrentDateTime] = useState('');
     const [tempChange , setTempChange] = useState(true)
-
+    const [activeContent, setActiveContent] = useState('Today');
+    
     function handleClick() {
         setTempChange(prev => !prev)
     }
-    
     useEffect(() => {
         fetch(api)
             .then(res => res.json())
@@ -27,13 +27,17 @@ function Main() {
     }, []);
     /*console.log(weather)*/
    /* console.log(currentDateTime)*/
+   function setActive(active:string) {
+        setActiveContent(active)
+   }
     const weatherToday = weather.list[0]
     return (
         <>
             <main className="w-full mx-20">
-                <Top />
-                <Middle city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange}/>
-                {weather && weather.list && weather.list.length > 0 ? <Bottom tempHours={weather.list}tempChange={tempChange}/>: "..."}
+                
+                <Top setActive={setActive}/>
+                {activeContent=== "Today"&&weather && weather.list && weather.list.length > 0 ?<Today city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange} weatherList={weather.list}/> : "..."}
+                {activeContent=== "Tommorow"&&weather && weather.list && weather.list.length > 0 ?<Tommorow city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange} weatherList={weather.list}/> : "..."}
             </main>
         </>
     )
