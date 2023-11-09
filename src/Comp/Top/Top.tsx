@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
-
-import Day from "./Day"
 import { nanoid } from "nanoid"
-import Image from "next/image"
-import sun from "public/Images/sun-Cloud.png"
+
+import Weatherlogo from "./Weather-logo/Weatherlogo"
+import Temp from "./Temp"
+import SearchBar from "./Search-bar/Searchbar"
+import Day from "./Day"
+
 interface Select{
     id:string,
     select:string
@@ -18,10 +20,7 @@ export default function Top(props:any) {
         {
         id: nanoid(),
         select:'Tommorow'}, 
-        {
-        id: nanoid(),
-        select:'Monthly Forecast'
-    }])
+        ])
     
     function handleClick(id:any ,name:any) {
         setChange(id)
@@ -53,28 +52,32 @@ export default function Top(props:any) {
         // Ensure minutes are displayed with two digits (e.g., "03" instead of "3")
         minutes = minutes < 10 ? "0" + minutes : minutes;
     
-      return `${hours}:${minutes} ${ampm}`;
+        return `${hours}:${minutes} ${ampm}`;
       }
+
+    function handleClickTemp() {
+        props.click()
+    }
+
     const changeDayElement = changeDay.map((item) => {
         return <Day 
             key={item.id} 
             date={item.select} 
             click={() => handleClick(item.id , item.select)} 
-            isActive={item.id === change}
-            />
-           
+            isActive={item.id === change}/>   
     })
     return(
         <>
-            <div className="flex font-['Poppins'] justify-between  items-center">
+            <nav> 
+                <div className="flex font-['Poppins'] justify-between  items-center">
                     <div className="mr-20 relative z-10">
-                        <Image className="absolute -z-10 top-0 left-0 -translate-x-[3rem] translate-y-[-1rem]" src={sun} alt="" width={80}/>
-                        <h1 className="text-white text-[4.313rem]  align-top">WeatherMe</h1>
-                        <p className="text-white font-[600] text-[1.188rem] text-right relative top-[-1rem]">{time}</p>
+                        <Weatherlogo time={time}/>
+                        <Temp click={handleClickTemp} tempChange={props.tempChange}/>
                     </div>
-                    {changeDayElement}
-                    
-            </div>
+                    {changeDayElement}  
+                </div>
+                <SearchBar changeId={props.changeId}/>
+            </nav>
         </>
     )
 }

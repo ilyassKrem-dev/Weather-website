@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react"
 
-import Temp from "./temp-info/Temp"
-import Tempbox from "./temp-info/Tempbox"
-import Additioninfo from "./temp-info/Additioninfo"
-import Location from "./temp-info/Location"
+import Tempbox from "../Same/Tempbox"
+import Additioninfo from "../Same/Additioninfo"
+import Location from "../Same/Location"
 import Bottom from "../Today/Bottom/Bottom"
 
 function Today(props:any) {
     const [currentDate, setCurrentDate] = useState('');
     
     
-    const tempList = props.tempList
     useEffect(() => {
         const date = new Date().toLocaleString('en-US', {
         month: 'short',
@@ -20,13 +18,8 @@ function Today(props:any) {
         setCurrentDate(date);
     }, []);
 
-    function handleClick() {
-        props.click()
-    }
-
     return (
         <>
-            <Temp click={handleClick} tempChange={props.tempChange}/>
 
             <div className="bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow mx-60 flex flex-col p-6 text-white">
 

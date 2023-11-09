@@ -1,44 +1,61 @@
 import { useEffect, useState } from "react"
 
-import Temp from "./temp-info/Temp"
-import Tempbox from "./temp-info/Tempbox"
-import Additioninfo from "./temp-info/Additioninfo"
-import Location from "./temp-info/Location"
+import Tempbox from "../Same/Tempbox"
+import Additioninfo from "../Same/Additioninfo"
+import Location from "../Same/Location"
 import Bottom from "./Bottom/Bottom"
 
 function Tommorow(props:any) {
     const [currentDate, setCurrentDate] = useState('');
-    
-    
-    const tempList = props.tempList
+    const [tempHours , setTempHours] = useState(props.weatherList)
+    const [currentDateTime, setCurrentDateTime] = useState('');
+    /*format date*/
     useEffect(() => {
-        const date = new Date().toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        weekday: 'short'
+        const today = new Date();
+        const nextDay = new Date(today);
+        nextDay.setDate(today.getDate() + 1);
+    
+        const formattedDate = nextDay.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            weekday: 'short',
         });
-        setCurrentDate(date);
+    
+        setCurrentDate(formattedDate);
     }, []);
 
-    function handleClick() {
-        props.click()
-    }
+        /*filter data to next day*/
+    useEffect(() => {
+        const now = new Date();
+        now.setDate(now.getDate() + 1);
+        const formattedDateTime = now.toISOString().slice(0, 10).replace('T', ' ');
+        setCurrentDateTime(formattedDateTime);
+    }, []);
+    const filtered = tempHours.filter((item:any) => {
+        return item.dt_txt.split(" ")[0] === currentDateTime
+    })
 
     return (
         <>
-            <Temp click={handleClick} tempChange={props.tempChange}/>
 
             <div className="bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow mx-60 flex flex-col p-6 text-white">
 
                 <Location city={props.city}/>
-                {props.tempList && props.tempList.main&&<Tempbox tempList={props.tempList} tempChange={props.tempChange}/>}
+
+                {filtered[0] && filtered[0].main &&
+                <Tempbox tempList={filtered[0]} tempChange={props.tempChange}/>}
 
                 <p className="font-[500] text-[1rem] underline">{currentDate}</p>
 
-                {props.tempList && props.tempList.main ? (
-                    <Additioninfo tempinfo={props.tempList} />) : (".." )}
+                {filtered[0] && filtered[0] ? (
+                <Additioninfo tempinfo={filtered[0]} />) : (".." )}
             </div>
-            <Bottom tempHours={props.weatherList} tempChange={props.tempChange}/>
+            {filtered.length > 0 ? (
+                <Bottom tempHours={filtered} tempChange={props.tempChange} />
+                ) : (
+                "No data available for tomorrow."
+                )}
+            
         </>
     )
 }

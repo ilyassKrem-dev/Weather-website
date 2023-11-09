@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Timetem from "./info-time/Timetemp";
+import Timetem from "@/Comp/Same/info-time/Timetemp";
 function Bottom(props:any) {
     const [tempHours , setTempHours] = useState(props.tempHours)
     const [currentDateTime, setCurrentDateTime] = useState('');
