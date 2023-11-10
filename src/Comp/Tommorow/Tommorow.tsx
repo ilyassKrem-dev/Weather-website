@@ -7,8 +7,11 @@ import Bottom from "./Bottom/Bottom"
 
 function Tommorow(props:any) {
     const [currentDate, setCurrentDate] = useState('');
-    const [tempHours , setTempHours] = useState(props.weatherList)
+
     const [currentDateTime, setCurrentDateTime] = useState('');
+
+    const [filtered, setFiltered] = useState<any>([]);
+    
     /*format date*/
     useEffect(() => {
         const today = new Date();
@@ -24,16 +27,21 @@ function Tommorow(props:any) {
         setCurrentDate(formattedDate);
     }, []);
 
-        /*filter data to next day*/
+    /*filter data to next day*/
     useEffect(() => {
         const now = new Date();
         now.setDate(now.getDate() + 1);
-        const formattedDateTime = now.toISOString().slice(0, 10).replace('T', ' ');
+        const formattedDateTime = now.toISOString().slice(0, 10).replace("T", " ");
         setCurrentDateTime(formattedDateTime);
-    }, []);
-    const filtered = tempHours.filter((item:any) => {
-        return item.dt_txt.split(" ")[0] === currentDateTime
-    })
+      }, []);
+    
+      useEffect(() => {
+        const newFiltered = props.weatherList.filter((item: any) => {
+          return item.dt_txt.split(" ")[0] === currentDateTime;
+        });
+        setFiltered(newFiltered);
+      }, [props.weatherList, currentDateTime]);
+      
 
     return (
         <>

@@ -3,7 +3,7 @@ import {useEffect, useMemo, useState } from "react"
 
 
 interface City {
-    id: number;
+    id: string;
     name: string;
     
 };
@@ -51,19 +51,16 @@ export default function SearchBar(props:any) {
     });
     
     function handleClick(name:string) {
-        setUserInput(name)
-        const idFinding = limitedResults.find(item => item.name === name)
-        if (idFinding) {
-            props.changeId(idFinding.id)
-        }
+        props.changeId(name)
         setShowResults(false)    
     }
     const limitedResults = filteredCities.slice(0, maxResults);
     const cityElement = useMemo(() => {
         return limitedResults.map((city,index) => (
-             <p onClick={() => handleClick(city.name)}  key={index} className='cursor-pointer capitalize border-b-2 border-black mb-2'>{city.name}</p>
+             <p onClick={() => handleClick(city.id)}  key={index} className='cursor-pointer capitalize border-b-2 border-black mb-2'>{city.name}</p>
         ))
     }, [limitedResults]) 
+    
     return (
         <>
             <div className="flex justify-center mb-5">

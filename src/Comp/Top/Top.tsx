@@ -13,7 +13,9 @@ interface Select{
 export default function Top(props:any) {
 
     const [change, setChange] = useState<string | null>(null);
+    
     const [time , setTime] = useState<any>(getCurrentTime())
+
     const [changeDay , setChangeDay] = useState<Select[]>([{
         id: nanoid(),
         select:'Today'},
@@ -45,20 +47,17 @@ export default function Top(props:any) {
         let minutes: any = date.getMinutes();
         let ampm = hours >= 12 ? "PM" : "AM";
     
-        // Convert hours to 12-hour format
+        
         hours = hours % 12;
-        hours = hours ? hours : 12; // 12 should be displayed as 12 AM
+        hours = hours ? hours : 12; 
     
-        // Ensure minutes are displayed with two digits (e.g., "03" instead of "3")
+        
         minutes = minutes < 10 ? "0" + minutes : minutes;
     
         return `${hours}:${minutes} ${ampm}`;
       }
 
-    function handleClickTemp() {
-        props.click()
-    }
-
+    
     const changeDayElement = changeDay.map((item) => {
         return <Day 
             key={item.id} 
@@ -66,13 +65,14 @@ export default function Top(props:any) {
             click={() => handleClick(item.id , item.select)} 
             isActive={item.id === change}/>   
     })
+
     return(
         <>
             <nav> 
                 <div className="flex font-['Poppins'] justify-between  items-center">
                     <div className="mr-20 relative z-10">
                         <Weatherlogo time={time}/>
-                        <Temp click={handleClickTemp} tempChange={props.tempChange}/>
+                        <Temp click={props.click} tempChange={props.tempChange}/>
                     </div>
                     {changeDayElement}  
                 </div>
