@@ -22,15 +22,15 @@ export default function Tempbox(props:any) {
     return (
 
         <>
-            <div className="flex items-center justify-center mt-[2.5rem]">
+            <div className="flex items-center justify-center max-[1022px]:mt-6 mt-[2.5rem]">
                     <Image src={tempsvg} alt="" width={10}/>
-                    <p className="font-[300] text-[3rem] ml-3">
+                    <p className="font-[300] text-[2rem] sm:text-[3rem] ml-3">
                         {props.tempList && props.tempList.main ? (
                             props.tempChange
                             ? (props.tempList.main.temp - 273.15).toFixed(0) + "°C"
                             : ((props.tempList.main.temp-273.15)*9/5).toFixed(0) + "°F"
                         ) : (
-                            ".." // Display a message when data is not available
+                            ".."
                         )}
                     </p>
                     <div className="ml-2">

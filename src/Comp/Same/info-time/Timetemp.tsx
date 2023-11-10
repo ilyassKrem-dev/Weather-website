@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 export default function Timetem(props:any) {
+    
     const timeParts = props.temp.dt_txt.split(" ")[1].split(":");
     let hours = parseInt(timeParts[0]);
     let minutes = timeParts[1];
@@ -31,10 +32,10 @@ export default function Timetem(props:any) {
 
     return (
         <>
-            <div className="flex justify-center flex-col bg-gradient-to-b from-fuchsia-600 to-zinc-300 rounded-[2rem] relative mx-6">
-                    <div className="py-3 px-5 relative z-10">
+            <div className=" bg-gradient-to-b from-fuchsia-600 to-zinc-300 rounded-[2rem] relative mx-6">
+                    <div className="flex flex-col items-center max-[300px]:py-1 max-[300px]:py-2 py-3 px-5 relative z-10">
                         <p className="text-[0.8rem]">{formattedTime}</p>
-                        <Image src={imageSource} alt="" width={50} height={50}/>
+                        <Image className="max-[300px]:w-12" src={imageSource} alt="" width={50} height={50}/>
                         <p className="font-[300] text-[0.75rem] mt-1">
                             {props.tempChange
                             ? (props.temp.main.temp - 273.15).toFixed(0) + "°C"

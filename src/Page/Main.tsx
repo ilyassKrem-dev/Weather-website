@@ -8,11 +8,31 @@ function Main() {
     const [api , setApi] = useState("https://api.openweathermap.org/data/2.5/forecast?id=2553604&appid=c373cb30deb4bc19b25eac57de187d67")
     
     const [weather , setWeather] = useState({city:{name:""} , list:[]})
-
+    const [windowSize , setWindowSize] = useState(0)
     const [tempChange , setTempChange] = useState(true)
 
     const [activeContent, setActiveContent] = useState('Today');
     
+    useEffect(() => {
+      
+        if (typeof window !== "undefined") {
+          setWindowSize(window.innerWidth);
+        }
+    
+       
+        const handleResize = () => {
+          setWindowSize(window.innerWidth);
+        };
+    
+       
+        window.addEventListener("resize", handleResize);
+    
+       
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     function handleClick() {
         setTempChange(prev => !prev)
     }
@@ -32,15 +52,15 @@ function Main() {
     const weatherToday = weather.list[0]
     return (
         <>
-            <main className="w-full mx-20">
+            <main className="w-full">
                 
-                <Top setActive={setActive} click={handleClick} tempChange={tempChange} changeId={handleClickId}/>
+                <Top activeContent={activeContent} setActive={setActive} click={handleClick} tempChange={tempChange} changeId={handleClickId} window={windowSize}/>
 
                 {activeContent=== "Today"&&weather.list.length > 0 &&
-                <Today city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange} weatherList={weather.list}/>}
+                <Today window={windowSize} city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange} weatherList={weather.list}/>}
 
                 {activeContent=== "Tommorow"&&weather&&weather.list.length > 0 &&
-                <Tommorow city={weather.city.name} tempList={weatherToday} click={handleClick} tempChange={tempChange} weatherList={weather.list}/>}
+                <Tommorow window={windowSize} city={weather.city.name} click={handleClick} tempChange={tempChange} weatherList={weather.list}/>}
             </main>
         </>
     )

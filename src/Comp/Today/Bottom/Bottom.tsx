@@ -15,9 +15,11 @@ function Bottom(props:any) {
     const filteredTime = filtered.map((data:any,index:number) => {
         return <Timetem key={index} temp={data} tempChange={props.tempChange} />
     })
+    
     return (
         <>
-            <div className="flex items-center justify-center mt-10 text-white text-center">
+            <div className={`flex  mt-10 text-white text-center ${filtered.length > 1 ? "max-[800px]:w-80" : ""} max-[800px]:overflow-x-scroll [&::-webkit-scrollbar]:hidden `}>
+                
                 {filteredTime}
             </div>
             

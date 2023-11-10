@@ -1,36 +1,14 @@
 import { useEffect, useState } from "react"
-import { nanoid } from "nanoid"
 
 import Weatherlogo from "./Weather-logo/Weatherlogo"
 import Temp from "./Temp"
 import SearchBar from "./Search-bar/Searchbar"
 import Day from "./Day"
+import Daymo from "./Daymob/Daymo"
 
-interface Select{
-    id:string,
-    select:string
-}
 export default function Top(props:any) {
-
-    const [change, setChange] = useState<string | null>(null);
-    
     const [time , setTime] = useState<any>(getCurrentTime())
 
-    const [changeDay , setChangeDay] = useState<Select[]>([{
-        id: nanoid(),
-        select:'Today'},
-        {
-        id: nanoid(),
-        select:'Tommorow'}, 
-        ])
-    
-    function handleClick(id:any ,name:any) {
-        setChange(id)
-        props.setActive(name)
-    }
-    useEffect(() => {
-        setChange(changeDay[0].id)
-    } , [])
     useEffect(() => {
         // Update the time every second
         const interval = setInterval(() => {
@@ -58,23 +36,27 @@ export default function Top(props:any) {
       }
 
     
-    const changeDayElement = changeDay.map((item) => {
-        return <Day 
-            key={item.id} 
-            date={item.select} 
-            click={() => handleClick(item.id , item.select)} 
-            isActive={item.id === change}/>   
-    })
+
 
     return(
         <>
             <nav> 
-                <div className="flex font-['Poppins'] justify-between  items-center">
-                    <div className="mr-20 relative z-10">
+                <div className="flex  flex-col items-center mt-2 lg:flex-row font-['Poppins'] lg:justify-between  items-center">
+                    <div className="max-[400px]:mx-0 mx-20 relative z-10 flex flex-col max-[1022px]:items-center">
                         <Weatherlogo time={time}/>
                         <Temp click={props.click} tempChange={props.tempChange}/>
                     </div>
-                    {changeDayElement}  
+                    
+                    <div>
+                      {props.window <= 1023?
+                      <Daymo activeContent={props.activeContent} click={props.setActive}/>
+                          :
+                      <Day click={props.setActive}/>}
+                    </div>
+                        
+                    
+                     
+                           
                 </div>
                 <SearchBar changeId={props.changeId}/>
             </nav>

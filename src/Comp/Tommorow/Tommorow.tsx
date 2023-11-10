@@ -45,25 +45,25 @@ function Tommorow(props:any) {
 
     return (
         <>
+            <div className="flex flex-col  items-center">
+                <div className="flex flex-col max-[1022px]:items-center bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow  flex flex-col p-5 max-[300px]:p-4 sm:p-6 text-white">
 
-            <div className="bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow mx-60 flex flex-col p-6 text-white">
+                    <Location city={props.city}/>
 
-                <Location city={props.city}/>
+                    {filtered[0] && filtered[0].main &&
+                    <Tempbox tempList={filtered[0]} tempChange={props.tempChange}/>}
 
-                {filtered[0] && filtered[0].main &&
-                <Tempbox tempList={filtered[0]} tempChange={props.tempChange}/>}
+                    <p className="font-[500] text-[1rem] underline max-[1022px]:mt-6">{currentDate}</p>
 
-                <p className="font-[500] text-[1rem] underline">{currentDate}</p>
-
-                {filtered[0] && filtered[0] ? (
-                <Additioninfo tempinfo={filtered[0]} />) : (".." )}
-            </div>
-            {filtered.length > 0 ? (
-                <Bottom tempHours={filtered} tempChange={props.tempChange} />
-                ) : (
-                "No data available for tomorrow."
-                )}
-            
+                    {filtered[0] && filtered[0] ? (
+                    <Additioninfo window={props.window} tempinfo={filtered[0]} />) : (".." )}
+                </div>
+                {filtered.length > 0 ? (
+                    <Bottom tempHours={filtered} tempChange={props.tempChange} />
+                    ) : (
+                    "No data available for tomorrow."
+                    )}
+            </div>  
         </>
     )
 }

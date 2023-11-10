@@ -21,18 +21,21 @@ function Today(props:any) {
 
     return (
         <>
+            <div className="flex flex-col  items-center">
+                <div className="flex flex-col max-[1022px]:items-center bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow  flex flex-col p-5 max-[300px]:p-4 sm:p-6 text-white">
 
-            <div className="bg-gradient-to-br from-fuchsia-600 to-zinc-900 rounded-[1.875rem] shadow mx-60 flex flex-col p-6 text-white">
+                    <Location city={props.city}/>   
+                    {props.tempList && props.tempList.main&&
+                    <Tempbox tempList={props.tempList} tempChange={props.tempChange}/>}
 
-                <Location city={props.city}/>
-                {props.tempList && props.tempList.main&&<Tempbox tempList={props.tempList} tempChange={props.tempChange}/>}
+                    <p className="font-[500] text-[1rem] underline max-[1022px]:mt-6">{currentDate}</p>
 
-                <p className="font-[500] text-[1rem] underline">{currentDate}</p>
-
-                {props.tempList && props.tempList.main ? (
-                    <Additioninfo tempinfo={props.tempList} />) : (".." )}
+                    {props.tempList && props.tempList.main ? (
+                    <Additioninfo window={props.window} tempinfo={props.tempList} />) : (".." )}
+                    
+                </div>
+                <Bottom tempHours={props.weatherList} tempChange={props.tempChange}/>
             </div>
-            <Bottom tempHours={props.weatherList} tempChange={props.tempChange}/>
         </>
     )
 }
