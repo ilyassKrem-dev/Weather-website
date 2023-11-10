@@ -5,6 +5,8 @@ This is a weather website built using openweather api.
 
 it gives today's and tomorrow's weather of any country.
 
+![Weather][Weatherimage]
+
 ### Built With
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
@@ -33,3 +35,4 @@ it gives today's and tomorrow's weather of any country.
 [Bootstrap-url]: https://getbootstrap.com
 [TailwindCss]:https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
 [TailwindCss-url]:https://tailwindcss.com/
+[Weatherimage]:https://user-images.githubusercontent.com/106384608/282195703-5b3f9cdc-443c-4a18-848e-b52725b99ec4.png
