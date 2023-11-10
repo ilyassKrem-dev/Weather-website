@@ -5,8 +5,10 @@ import Top from "@/Comp/Top/Top"
 import Today from "@/Comp/Today/Today"
 import Tommorow from "@/Comp/Tommorow/Tommorow"
 function Main() {
-    const [api , setApi] = useState("https://api.openweathermap.org/data/2.5/forecast?id=2553604&appid=c373cb30deb4bc19b25eac57de187d67")
-    
+                                                                                        //default 
+                                                                                        //location city id         
+    const [api , setApi] = useState("https://api.openweathermap.org/data/2.5/forecast?id=2553604&appid={add your api from openweather api }")
+    // add your api from openweather api 
     const [weather , setWeather] = useState({city:{name:""} , list:[]})
     const [windowSize , setWindowSize] = useState(0)
     const [tempChange , setTempChange] = useState(true)
@@ -47,7 +49,8 @@ function Main() {
         setActiveContent(active)
     }
     function handleClickId(id:string) {
-        setApi(`https://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=c373cb30deb4bc19b25eac57de187d67`);
+        setApi(`https://api.openweathermap.org/data/2.5/forecast?id=${id}&appid={add your api from openweather api}`);
+        // add your api from openweather api 
     }
     const weatherToday = weather.list[0]
     return (
